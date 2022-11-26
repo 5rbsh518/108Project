@@ -1,3 +1,5 @@
+package com.example.scheduledesigner;
+
 import java.io.File;
 import java.util.Scanner;
 

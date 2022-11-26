@@ -1,3 +1,5 @@
+package com.example.scheduledesigner;
+
 public class Section {
     private int CRN;
     private String activity;

@@ -1,3 +1,5 @@
+package com.example.scheduledesigner;
+
 public class Course {
     private String courseName;
     private Course[] preCourses;
