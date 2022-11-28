@@ -60,6 +60,11 @@ public class FileManager {
         return outputSections;
     }
 
+    static Student FinishedCourses2Student(String fileLocation){
+        Student outputStudent;
 
+
+        return outputStudent;
+    }
 
 }
