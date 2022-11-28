@@ -62,7 +62,29 @@ public class FileManager {
 
     static Student FinishedCourses2Student(String fileLocation){
         Student outputStudent;
-
+        File file = new File(fileLocation);
+        try{
+            String[] data;
+            Course[] finishedCourses;
+            int counter = 0;
+            Scanner input = new Scanner(file);
+            while (input.hasNextLine()){
+                ++counter;
+                input.nextLine();
+            }
+            input.close();
+            input = new Scanner(file);
+            finishedCourses = new Course[counter];
+            counter = 0;
+            while (input.hasNextLine()){
+                data = input.nextLine().split(",");
+                finishedCourses[counter++] = new Course(data[0],null,null,0);
+            }
+            outputStudent = new Student(finishedCourses);
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            outputStudent = null;
+        }
 
         return outputStudent;
     }
