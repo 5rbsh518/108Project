@@ -88,5 +88,52 @@ public class FileManager {
 
         return outputStudent;
     }
-
+    static Course[] degreePlan2Courses(String fileLocation){
+        Course[] PlanCourses;
+        File file = new File(fileLocation);
+        try{
+            String[] data;
+            int counter = 0;
+            Scanner input = new Scanner(file);
+            input.nextLine();
+            while (input.hasNextLine()){
+                ++counter;
+                input.nextLine();
+            }
+            input.close();
+            input = new Scanner(file);
+            PlanCourses = new Course[counter];
+            counter = 0;
+            input.nextLine();
+            while (input.hasNextLine()) {
+                Course[] preCourses;
+                Course[] coreCourses;
+                data = input.nextLine().split(",",-1);
+                if(data[2].equals("None") || data[2].equals("")){
+                    preCourses = null;
+                }else{
+                    preCourses = new Course[data[2].split(";").length];
+                    int listCounter = 0;
+                    for(String courseName: data[2].split(";")){
+                        preCourses[listCounter++] = new Course(courseName,null,null,0);
+                    }
+                }
+                if(data[3].equals("None") || data[3].equals("")){
+                    coreCourses = null;
+                }else{
+                    coreCourses = new Course[data[3].split(";").length];
+                    int listCounter = 0;
+                    for(String courseName: data[3].split(";")){
+                        coreCourses[listCounter++] = new Course(courseName,null,null,0);
+                    }
+                }
+                    int credit = Integer.parseInt(data[1]);
+                PlanCourses[counter++] = new Course(data[0],preCourses,coreCourses,credit);
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            PlanCourses = null;
+        }
+        return PlanCourses;
+    }
 }
