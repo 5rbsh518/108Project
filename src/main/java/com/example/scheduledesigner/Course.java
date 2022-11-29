@@ -1,5 +1,7 @@
 package com.example.scheduledesigner;
 
+import java.util.Arrays;
+
 public class Course {
     private String courseName;
     private Course[] preCourses;
@@ -46,9 +48,14 @@ public class Course {
     }
     //Methods
 
+
     @Override
     public String toString() {
-        return this.getCourseName() + "\nPrerequisite course." + this.getPreCourses() + "\nCorequisite course" +
-                this.getCoreCourses() + "\nCredits: " + this.getCredit();
+        return "Course{" +
+                "courseName='" + courseName + '\'' +
+                ", preCourses=" + Arrays.toString(preCourses) +
+                ", coreCourses=" + Arrays.toString(coreCourses) +
+                ", credit=" + credit +
+                '}';
     }
 }
