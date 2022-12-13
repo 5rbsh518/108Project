@@ -47,7 +47,19 @@ public class Course {
         this.credit = credit;
     }
     //Methods
+    @Override
+    public boolean equals(Object course){
+        if(course instanceof Course){
+            Course equaledCourse = (Course) course;
+            if (this.getCourseName().equals(equaledCourse.getCourseName())){
+                return true;
+            }else {
+                return  false;
+            }
 
+        }
+        return false;
+    }
 
     @Override
     public String toString() {

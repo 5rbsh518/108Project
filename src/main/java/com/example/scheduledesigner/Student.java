@@ -3,7 +3,7 @@ package com.example.scheduledesigner;
 import java.util.Arrays;
 
 public class Student {
-    Course[] finishedCourses;
+    private Course[] finishedCourses;
 
     Student(Course[] finishedCourses){
         this.finishedCourses = finishedCourses;

@@ -1,3 +1,10 @@
 Course,Credit Hours,Prerequisite,Corequisite 
+MATH101,4,,
+ENGL 101,3,,
+PE 101,1,,
+ICS 104,3,,
+IAS 121,2,,
+IAS 111,2,,
+PHYS 102,4,PHYS 101,
 ICS 108,4,ICS 104,None
 PHYS 101,4,PHYS 101;MATH 101,

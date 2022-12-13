@@ -1,6 +1,7 @@
 package com.example.scheduledesigner;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FileManager {
@@ -135,5 +136,42 @@ public class FileManager {
             PlanCourses = null;
         }
         return PlanCourses;
+    }
+    public static Section[] registrableSections(Section[] courseOffering,Student student,Course[] degreePlan){
+        Course[] finishedCourse = student.getFinishedCourses();
+        ArrayList<String> registrableCoursesNames = new ArrayList<>();
+        ArrayList<Section> registrableSections = new ArrayList<>();
+        for(Course studentCourse: degreePlan){
+            boolean courseFlag = true;
+            Course[] preCourses = studentCourse.getPreCourses();
+            if(preCourses != null){
+                for(int i = 0; i < preCourses.length && courseFlag; ++i){
+                    boolean preCourseFlag = false;
+                    for(int j = 0; j < student.getFinishedCourses().length && !preCourseFlag;++j){
+                        if(preCourses[i].equals(student.getFinishedCourses()[j])){
+                            preCourseFlag = true;
+                        }
+                    }
+                    if (!preCourseFlag){
+                        courseFlag = false;
+                    }
+                }
+            }
+            if(courseFlag){
+                registrableCoursesNames.add(studentCourse.getCourseName());
+            }
+        }
+        for(int i=0; i<student.getFinishedCourses().length; ++i){
+            if(registrableCoursesNames.contains(student.getFinishedCourses()[i].getCourseName())){
+                registrableCoursesNames.remove(student.getFinishedCourses()[i].getCourseName());
+            }
+        }
+        for(Section section: courseOffering){
+            if(registrableCoursesNames.contains(section.getCourse())){
+                registrableSections.add(section);
+            }
+        }
+        Section[] output = registrableSections.toArray(new Section[0]);
+        return  output;
     }
 }
