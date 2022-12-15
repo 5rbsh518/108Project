@@ -1,6 +1,8 @@
 package com.example.scheduledesigner;
 
-public class Section {
+import java.io.Serializable;
+
+public class Section implements Serializable {
     private int CRN;
     private String activity;
     private String course;
