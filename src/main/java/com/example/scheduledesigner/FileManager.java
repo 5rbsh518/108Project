@@ -34,7 +34,7 @@ public class FileManager {
             input.nextLine();// This to remove the first line (Information line)
             while (input.hasNextLine()) {
                 int[] time = new int[2];
-                data = input.nextLine().split(",");
+                data = input.nextLine().split(",",-1);
                 course = data[0].split("-")[0];
                 sectionnumber = data[0].split("-")[1];
                 activity = data[1];
@@ -42,7 +42,7 @@ public class FileManager {
                 courseName = data[3];
                 instructor = data[4];
                 days = data[5];
-                if (data[6].equals("")) {// Sometimes time is empty so it will replace it with 0000-0000
+                if (data[6].equals("") || data[6].equals("None")) {// Sometimes time is empty so it will replace it with 0000-0000
                     time[0] = 0;
                     time[1] = 0;
                 } else {
