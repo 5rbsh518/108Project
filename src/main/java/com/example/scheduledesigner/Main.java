@@ -1,6 +1,8 @@
 package com.example.scheduledesigner;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -20,6 +22,7 @@ import java.io.IOException;
 import static javafx.application.Application.launch;
 
 public class Main extends Application {
+    private Basket basket = new Basket();
 
     public void start(Stage stage) throws IOException {
         //stuff
@@ -54,24 +57,44 @@ public class Main extends Application {
         borderPane.setCenter(courseOfferingPane);
         courseOfferingPane.setPadding(new Insets(5,5,5,5));
         VBox vBox = new VBox();
+
+
+
+
+
         for (int i=0; i < Registrable.length;i++){
             Button btn1 = new Button();
             Button btn2 = new Button();
+            Label index = new Label(Integer.toString(i));
+            index.setVisible(false);
             btn1.setText("add");
             btn2.setText("remove");
             HBox hBox = new HBox();
             HBox btns = new HBox();
+            btn2.setVisible(false);
+            Registrable[i].setIndex(i);
+            btn1.setOnAction(event -> {
+                btn2.setVisible(true);
+                btn1.setVisible(false);
+                basket.addSection(Registrable[Integer.parseInt(index.getText())]);
+
+            });
+            btn2.setOnAction(event -> {
+                btn1.setVisible(true);
+                btn2.setVisible(false);
+            });
             hBox.setSpacing(500);
             btns.setSpacing(10);
+
 
             btns.getChildren().addAll(btn1,btn2);
             Label label = new Label(Registrable[i].toString());
             hBox.getChildren().addAll(label,btns);
-
             vBox.getChildren().add(hBox);
-
-
         }
+
+
+
         courseOfferingPane.setContent(vBox);
 
 
@@ -94,5 +117,8 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch();
     }
+
+
+
 }
 
