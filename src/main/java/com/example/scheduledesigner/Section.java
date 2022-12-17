@@ -123,9 +123,9 @@ public class Section implements Serializable {
 
     @Override
     public String toString() {
-        return this.getCourse() + "-" + this.getSectionnumber() + "," + this.getActivity() + "," + this.getCRN()
-                + "," + this.getCourseName() + "," + this.getInstructor() + "," + this.getDays()+ "," +
-                this.getTime()[0] +"-" + this.getTime()[1] + "," + this.getLocation() +"," + this.isStatus()
-                + "," + this.isWaitlist();
+        return this.getCourse() + "-" + this.getSectionnumber() + " " + this.getActivity() + " " + this.getCRN()
+                + " " + this.getCourseName() + " " + this.getInstructor() + " " + this.getDays()+ " " +
+                this.getTime()[0] +"-" + this.getTime()[1] + " " + this.getLocation() +" " + this.isStatus()
+                + " " + this.isWaitlist();
     }
 }
