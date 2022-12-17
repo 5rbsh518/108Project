@@ -14,6 +14,10 @@ public class Basket {
     Basket() {
 
     }
+    Basket(ArrayList<Section> sections) {
+        this.sections = sections;
+
+    }
 
         public ArrayList<Section> getSections() {
             return sections;
