@@ -113,12 +113,9 @@ public class Main extends Application {
 
         //Sceond scene
         BorderPane pane2 = new BorderPane();
+        pane2.setPadding(new Insets(10,10,10,10));
         VBox sectionBasket = new VBox();
-        for (int i =0; i<basket.getSections().size();i++){
-            Label sectionLabel = new Label(basket.getSections().get(i).getCourse()+"-"+basket.getSections().get(i).getSectionnumber()+"\n"+basket.getSections().get(i).getTime());
-            sectionBasket.getChildren().add(sectionLabel);
-            System.out.println(basket.getSections().get(i).getCourse()+"-"+basket.getSections().get(i).getSectionnumber()+"\n"+basket.getSections().get(i).getTime());
-        }
+
         pane2.setRight(sectionBasket);
 
 
@@ -140,6 +137,25 @@ public class Main extends Application {
 
         next.setOnAction(event -> {
             stage.setScene(scene2);
+            Schedule currentShcedule = new Schedule();
+            for (int i =0; i<basket.getSections().size();i++){
+                Label index = new Label(Integer.toString(i));
+                HBox sectionSlot = new HBox();
+                sectionSlot.setPadding(new Insets(10,10,10,10));
+                sectionSlot.setSpacing(10);
+                Button addToSh = new Button("add");
+                addToSh.setOnAction(e -> {
+                    currentShcedule.addSection(basket.getSections().get(Integer.parseInt(index.getText())));
+                    for(Section section: currentShcedule.getScheduleSections()){
+                        System.out.println(section);
+                    }
+
+                });
+                Label sectionLabel = new Label(basket.getSections().get(i).getCourse()+"-"+basket.getSections().get(i).getSectionnumber()+"\n"+basket.getSections().get(i).getTime()[0]+"-"+basket.getSections().get(i).getTime()[1]);
+                sectionSlot.getChildren().addAll(sectionLabel,addToSh);
+                sectionBasket.getChildren().add(sectionSlot);
+
+            }
         });
 
         stage.show();
