@@ -77,18 +77,12 @@ public class Main extends Application {
                 btn2.setVisible(true);
                 btn1.setVisible(false);
                 basket.addSection(Registrable[Integer.parseInt(index.getText())]);
-                for(Section section: basket.getSections()){
-                    System.out.println(section);
-                }
 
             });
             btn2.setOnAction(event -> {
                 btn1.setVisible(true);
                 btn2.setVisible(false);
                 basket.removeSection(Registrable[Integer.parseInt(index.getText())]);
-                for(Section section: basket.getSections()){
-                    System.out.println(section);
-                }
             });
             hBox.setSpacing(500);
             btns.setSpacing(10);
