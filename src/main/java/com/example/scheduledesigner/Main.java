@@ -114,9 +114,63 @@ public class Main extends Application {
         //Sceond scene
         BorderPane pane2 = new BorderPane();
         pane2.setPadding(new Insets(10,10,10,10));
+        GridPane schedule = new GridPane();
+        ScrollPane sectionBasketMain = new ScrollPane();
         VBox sectionBasket = new VBox();
+        sectionBasketMain.setContent(sectionBasket);
+        sectionBasketMain.setPadding(new Insets(5,5,5,5));
+        sectionBasketMain.setMinWidth(100);
+        Label label = new Label(" ");
+        Label label0 = new Label(" ");
+        Label label1 = new Label("SUN");
+        Label label2= new Label("MON");
+        Label label3 = new Label("TUE");
+        Label label4 = new Label("WED");
+        Label label5 = new Label("THU");
+        Label Time0 = new Label("07:00");
+        Label Time1 = new Label("08:00");
+        Label Time2= new Label("10:00");
+        Label Time3 = new Label("11:00");
+        Label Time4 = new Label("12:00");
+        Label Time5 = new Label("13:00");
+        Label Time6 = new Label("14:00");
+        Label Time7 = new Label("15:00");
+        Label Time8= new Label("16:00");
+        Label Time9 = new Label("17:00");
+        Button save = new Button("Save Schedule");
 
-        pane2.setRight(sectionBasket);
+        GridPane gridPane = new GridPane();
+//         x-axis,y-axis
+        gridPane.add(label, 0, 1, 1, 1);
+        gridPane.add(label0, 1, 1, 1, 1);
+        gridPane.add(label1, 2, 1, 1, 1);
+        gridPane.add(label2, 3, 1, 1, 1);
+        gridPane.add(label3, 4, 1, 1, 1);
+        gridPane.add(label4, 5, 1, 1, 1);
+        gridPane.add(label5, 6, 1, 1, 1);
+        gridPane.add(Time0, 1, 2, 1, 1);
+        gridPane.add(Time1, 1, 3, 1, 1);
+        gridPane.add(Time2, 1, 4, 1, 1);
+        gridPane.add(Time3, 1, 5, 1, 1);
+        gridPane.add(Time4, 1, 6, 1, 1);
+        gridPane.add(Time5, 1, 7, 1, 1);
+        gridPane.add(Time6, 1, 8, 1, 1);
+        gridPane.add(Time7, 1, 9, 1, 1);
+        gridPane.add(Time8, 1, 10, 1, 1);
+        gridPane.add(Time9, 1, 11, 1, 1);
+
+
+
+        gridPane.setHgap(80);
+        gridPane.setVgap(35);
+
+
+
+
+
+        pane2.setRight(sectionBasketMain);
+        pane2.setLeft(gridPane);
+        pane2.setBottom(save);
 
 
 
@@ -135,8 +189,13 @@ public class Main extends Application {
         stage.setWidth(1500);
         stage.setScene(scene1);
 
+        loadSchedule.setOnAction(event -> {
+
+        });
+
         next.setOnAction(event -> {
             stage.setScene(scene2);
+            stage.setTitle("Schedule Builder");
             Schedule currentShcedule = new Schedule();
             for (int i =0; i<basket.getSections().size();i++){
                 Label index = new Label(Integer.toString(i));
@@ -145,19 +204,21 @@ public class Main extends Application {
                 sectionSlot.setSpacing(10);
                 Button addToSh = new Button("add");
                 addToSh.setOnAction(e -> {
-                    currentShcedule.addSection(basket.getSections().get(Integer.parseInt(index.getText())));
-                    for(Section section: currentShcedule.getScheduleSections()){
-                        System.out.println(section);
+                    if(currentShcedule.addable(basket.getSections().get(Integer.parseInt(index.getText())))){
+                        currentShcedule.addSection(basket.getSections().get(Integer.parseInt(index.getText())));
+                        addToSh.setVisible(false);
                     }
 
                 });
-                Label sectionLabel = new Label(basket.getSections().get(i).getCourse()+"-"+basket.getSections().get(i).getSectionnumber()+"\n"+basket.getSections().get(i).getTime()[0]+"-"+basket.getSections().get(i).getTime()[1]);
+                Label sectionLabel = new Label(basket.getSections().get(i).getCourse()+"-"+basket.getSections().get(i).getSectionnumber()+
+                        "\n"+basket.getSections().get(i).getTime()[0]+"-"+basket.getSections().get(i).getTime()[1]+" "+
+                        "-"+basket.getSections().get(i).getDays());
                 sectionSlot.getChildren().addAll(sectionLabel,addToSh);
                 sectionBasket.getChildren().add(sectionSlot);
 
             }
         });
-
+        stage.setTitle("CourseOffering");
         stage.show();
     }
 
