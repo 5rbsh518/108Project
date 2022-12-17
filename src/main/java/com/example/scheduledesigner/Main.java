@@ -10,10 +10,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -80,6 +77,7 @@ public class Main extends Application {
                 for(Section section: basket.getSections()){
                     System.out.println(section);
                 }
+                System.out.println("--------------------------------------");
 
             });
             btn2.setOnAction(event -> {
@@ -89,6 +87,7 @@ public class Main extends Application {
                 for(Section section: basket.getSections()){
                     System.out.println(section);
                 }
+                System.out.println("--------------------------------------");
             });
             hBox.setSpacing(500);
             btns.setSpacing(10);
@@ -112,11 +111,37 @@ public class Main extends Application {
 
 
 
+        //Sceond scene
+        BorderPane pane2 = new BorderPane();
+        VBox sectionBasket = new VBox();
+        for (int i =0; i<basket.getSections().size();i++){
+            Label sectionLabel = new Label(basket.getSections().get(i).getCourse()+"-"+basket.getSections().get(i).getSectionnumber()+"\n"+basket.getSections().get(i).getTime());
+            sectionBasket.getChildren().add(sectionLabel);
+            System.out.println(basket.getSections().get(i).getCourse()+"-"+basket.getSections().get(i).getSectionnumber()+"\n"+basket.getSections().get(i).getTime());
+        }
+        pane2.setRight(sectionBasket);
+
+
+
+
+
+
+
+
+
+
+
 
         Scene scene1 = new Scene(borderPane);
+        Scene scene2 = new Scene(pane2);
         stage.setHeight(1000);
         stage.setWidth(1500);
         stage.setScene(scene1);
+
+        next.setOnAction(event -> {
+            stage.setScene(scene2);
+        });
+
         stage.show();
     }
 
