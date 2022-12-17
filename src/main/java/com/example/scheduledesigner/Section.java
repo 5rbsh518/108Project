@@ -15,6 +15,8 @@ public class Section implements Serializable {
     private boolean status;
     private boolean waitlist;
 
+    private int index;
+
     Section(String course, String sectionnumber,String activity, int CRN, String courseName, String instructor, String days, int[] time,
             String location, boolean status, boolean waitlist){
         this.course =course;// Course number example "ICS104"
@@ -66,6 +68,10 @@ public class Section implements Serializable {
         return location;
     }
 
+    public int getIndex() {
+        return index;
+    }
+
     public boolean isStatus() {
         return status;
     }
@@ -73,6 +79,8 @@ public class Section implements Serializable {
     public boolean isWaitlist() {
         return waitlist;
     }
+
+
     //setters
 
     public void setCourse(String course) {
@@ -117,6 +125,10 @@ public class Section implements Serializable {
 
     public void setWaitlist(boolean waitlist) {
         this.waitlist = waitlist;
+    }
+
+    public void setIndex(int index) {
+        this.index = index;
     }
 
     //Method
