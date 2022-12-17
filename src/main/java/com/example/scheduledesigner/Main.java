@@ -14,12 +14,14 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 
 import static javafx.application.Application.launch;
 
 public class Main extends Application {
     private Basket basket = new Basket();
+    private Schedule currentShcedule = new Schedule();
 
     public void start(Stage stage) throws IOException {
         //stuff
@@ -42,6 +44,7 @@ public class Main extends Application {
         //Load schedule button
         Button loadSchedule = new Button("Start with a saved schedule");
         loadSchedule.setPadding(new Insets(5,5,5,5));
+
 
         HBox top = new HBox();
         top.setPadding(new Insets(15,15,15,15));
@@ -114,12 +117,21 @@ public class Main extends Application {
         //Sceond scene
         BorderPane pane2 = new BorderPane();
         pane2.setPadding(new Insets(10,10,10,10));
-        GridPane schedule = new GridPane();
+
         ScrollPane sectionBasketMain = new ScrollPane();
         VBox sectionBasket = new VBox();
         sectionBasketMain.setContent(sectionBasket);
         sectionBasketMain.setPadding(new Insets(5,5,5,5));
         sectionBasketMain.setMinWidth(100);
+
+
+        ScrollPane sectionScheduleMain = new ScrollPane();
+        VBox sectionSchedule = new VBox();
+        sectionScheduleMain.setContent(sectionSchedule);
+        sectionScheduleMain.setPadding(new Insets(5,5,5,5));
+        sectionScheduleMain.setMinWidth(100);
+
+        GridPane schedule = new GridPane();
         Label label = new Label(" ");
         Label label0 = new Label(" ");
         Label label1 = new Label("SUN");
@@ -138,39 +150,46 @@ public class Main extends Application {
         Label Time8= new Label("16:00");
         Label Time9 = new Label("17:00");
         Button save = new Button("Save Schedule");
-
-        GridPane gridPane = new GridPane();
-//         x-axis,y-axis
-        gridPane.add(label, 0, 1, 1, 1);
-        gridPane.add(label0, 1, 1, 1, 1);
-        gridPane.add(label1, 2, 1, 1, 1);
-        gridPane.add(label2, 3, 1, 1, 1);
-        gridPane.add(label3, 4, 1, 1, 1);
-        gridPane.add(label4, 5, 1, 1, 1);
-        gridPane.add(label5, 6, 1, 1, 1);
-        gridPane.add(Time0, 1, 2, 1, 1);
-        gridPane.add(Time1, 1, 3, 1, 1);
-        gridPane.add(Time2, 1, 4, 1, 1);
-        gridPane.add(Time3, 1, 5, 1, 1);
-        gridPane.add(Time4, 1, 6, 1, 1);
-        gridPane.add(Time5, 1, 7, 1, 1);
-        gridPane.add(Time6, 1, 8, 1, 1);
-        gridPane.add(Time7, 1, 9, 1, 1);
-        gridPane.add(Time8, 1, 10, 1, 1);
-        gridPane.add(Time9, 1, 11, 1, 1);
+        schedule.add(label, 0, 1, 1, 1);
+        schedule.add(label0, 1, 1, 1, 1);
+        schedule.add(label1, 2, 1, 1, 1);
+        schedule.add(label2, 3, 1, 1, 1);
+        schedule.add(label3, 4, 1, 1, 1);
+        schedule.add(label4, 5, 1, 1, 1);
+        schedule.add(label5, 6, 1, 1, 1);
+        schedule.add(Time0, 1, 2, 1, 1);
+        schedule.add(Time1, 1, 3, 1, 1);
+        schedule.add(Time2, 1, 4, 1, 1);
+        schedule.add(Time3, 1, 5, 1, 1);
+        schedule.add(Time4, 1, 6, 1, 1);
+        schedule.add(Time5, 1, 7, 1, 1);
+        schedule.add(Time6, 1, 8, 1, 1);
+        schedule.add(Time7, 1, 9, 1, 1);
+        schedule.add(Time8, 1, 10, 1, 1);
+        schedule.add(Time9, 1, 11, 1, 1);
 
 
 
-        gridPane.setHgap(80);
-        gridPane.setVgap(35);
+        save.setOnAction(event -> {
+            FileManager.saveSchedule(currentShcedule,"saved");
+        });
 
 
 
 
 
+
+
+        schedule.setHgap(80);
+        schedule.setVgap(35);
+
+
+
+
+        pane2.setCenter(schedule);
         pane2.setRight(sectionBasketMain);
-        pane2.setLeft(gridPane);
         pane2.setBottom(save);
+        pane2.setLeft(sectionScheduleMain);
 
 
 
@@ -190,29 +209,71 @@ public class Main extends Application {
         stage.setScene(scene1);
 
         loadSchedule.setOnAction(event -> {
+            currentShcedule = FileManager.loadSchedule("saved");
+            basket = new Basket(currentShcedule.getScheduleSections());
+            stage.setScene(scene2);
+            stage.setTitle("Schedule Builder");
 
+            for (int i =0; i<basket.getSections().size();i++){
+                Label index = new Label(Integer.toString(i));
+                HBox sectionSlot = new HBox();
+                sectionSlot.setPadding(new Insets(10,10,10,10));
+                sectionSlot.setSpacing(10);
+                Button addToSh = new Button("del");
+                Label sectionLabel = new Label(basket.getSections().get(i).getCourse()+"-"+basket.getSections().get(i).getSectionnumber()+
+                        "\n"+basket.getSections().get(i).getTime()[0]+"-"+basket.getSections().get(i).getTime()[1]+" "+
+                        "-"+basket.getSections().get(i).getDays());
+                addToSh.setOnAction(e -> {
+                    if(currentShcedule.addable(basket.getSections().get(Integer.parseInt(index.getText())))){
+                        currentShcedule.addSection(basket.getSections().get(Integer.parseInt(index.getText())));
+                        addToSh.setVisible(false);
+                        HBox scheduleSlot = new HBox();
+                        scheduleSlot.setPadding(new Insets(10,10,10,10));
+                        scheduleSlot.setSpacing(10);
+                        Button removeToSh = new Button("del");
+                        scheduleSlot.getChildren().addAll(sectionLabel,removeToSh);
+                        sectionSchedule.getChildren().add(scheduleSlot);
+                    }
+
+                });
+                sectionSlot.getChildren().addAll(sectionLabel,addToSh);
+                sectionSchedule.getChildren().add(sectionSlot);
+
+            }
         });
+
 
         next.setOnAction(event -> {
             stage.setScene(scene2);
             stage.setTitle("Schedule Builder");
-            Schedule currentShcedule = new Schedule();
+
             for (int i =0; i<basket.getSections().size();i++){
                 Label index = new Label(Integer.toString(i));
                 HBox sectionSlot = new HBox();
                 sectionSlot.setPadding(new Insets(10,10,10,10));
                 sectionSlot.setSpacing(10);
                 Button addToSh = new Button("add");
-                addToSh.setOnAction(e -> {
-                    if(currentShcedule.addable(basket.getSections().get(Integer.parseInt(index.getText())))){
-                        currentShcedule.addSection(basket.getSections().get(Integer.parseInt(index.getText())));
-                        addToSh.setVisible(false);
-                    }
-
-                });
                 Label sectionLabel = new Label(basket.getSections().get(i).getCourse()+"-"+basket.getSections().get(i).getSectionnumber()+
                         "\n"+basket.getSections().get(i).getTime()[0]+"-"+basket.getSections().get(i).getTime()[1]+" "+
                         "-"+basket.getSections().get(i).getDays());
+                addToSh.setOnAction(e -> {
+                    if(currentShcedule.addable(basket.getSections().get(Integer.parseInt(index.getText())))){
+                        currentShcedule.addSection(basket.getSections().get(Integer.parseInt(index.getText())));
+                        sectionSlot.setVisible(false);
+                        HBox scheduleSlot = new HBox();
+                        scheduleSlot.setPadding(new Insets(10,10,10,10));
+                        scheduleSlot.setSpacing(10);
+                        Button removeToSh = new Button("del");
+                        removeToSh.setOnAction(event1 -> {
+                            sectionSlot.setVisible(true);
+                            scheduleSlot.setVisible(false);
+                        });
+                        scheduleSlot.getChildren().addAll(sectionLabel,removeToSh);
+                        sectionSchedule.getChildren().add(scheduleSlot);
+                    }
+
+                });
+
                 sectionSlot.getChildren().addAll(sectionLabel,addToSh);
                 sectionBasket.getChildren().add(sectionSlot);
 
