@@ -1,19 +1,29 @@
 package com.example.scheduledesigner;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Schedule implements Serializable {
-    private Section[] scheduleSections;
+    private ArrayList<Section> scheduleSections;
 
-    Schedule(Section[] sections){
+    Schedule(){
+
+    }
+    Schedule(ArrayList sections){
         this.scheduleSections = sections;
     }
-
-    public Section[] getScheduleSections() {
+    public ArrayList getScheduleSections() {
         return scheduleSections;
     }
 
-    public void setScheduleSections(Section[] scheduleSections) {
+    public void setScheduleSections(ArrayList scheduleSections) {
         this.scheduleSections = scheduleSections;
+    }
+
+    public void addSection(Section section){
+        scheduleSections.add(section);
+    }
+    public void removeSection(Section section){
+        scheduleSections.remove(section);
     }
 }
